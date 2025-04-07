@@ -1,0 +1,13 @@
+import pandas as pd
+data = {
+    'Name': ['dev', 'jyo', 'pavi', 'bhu'],
+    'Age': [24, 27, 22, 32],
+    'Department': ['HR', 'Finance', 'IT', 'Marketing'],
+    'Salary': [50000, 60000, 55000, 65000]
+}
+df = pd.DataFrame(data)
+print("DataFrame:")
+print(df)
+names = df['Name']
+print("\nNames:")
+print(names)
