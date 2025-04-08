@@ -1,0 +1,63 @@
+#Program_1
+
+# Facts
+facts = {
+    "parent": [("john", "mary"), ("john", "david"), ("susan", "mary"),
+               ("susan", "david"), ("mary", "linda"), ("mary", "steve")],
+    "male": ["john", "david", "steve"],
+    "female": ["susan", "mary", "linda"]
+}
+
+# Rules
+def father(x, y):
+    return (x, y) in facts["parent"] and x in facts["male"]
+
+def mother(x, y):
+    return (x, y) in facts["parent"] and x in facts["female"]
+
+def grandparent(x, y):
+    for z in [child for parent, child in facts["parent"] if parent == x]:
+        if (z, y) in facts["parent"]:
+            return True
+    return False
+
+def sibling(x, y):
+    for z in set(parent for parent, child in facts["parent"] if child == x):
+        if (z, y) in facts["parent"] and x != y:
+            return True
+    return False
+
+# Queries
+print("father(john, mary):", father("john", "mary"))  # Output: true
+print("mother(susan, david):", mother("susan", "david"))  # Output: true
+print("grandparent(john, linda):", grandparent("john", "linda"))  # Output: true
+print("sibling(mary, david):", sibling("mary", "david"))  # Output: true
+
+     
+
+#Program_2
+
+# Facts: Symptoms associated with diseases
+facts = {
+    "john": ["fever", "cough", "shortness_of_breath"],
+    "alice": ["headache", "runny_nose", "sneezing"]
+}
+
+# Disease definitions
+diseases = {
+    "covid": ["fever", "cough", "shortness_of_breath"],
+    "flu": ["fever", "cough", "runny_nose"],
+    "common_cold": ["runny_nose", "sneezing", "headache"]
+}
+
+# Rule to diagnose
+def diagnose(person):
+    person_symptoms = set(facts.get(person, []))
+    for disease, symptoms in diseases.items():
+        if set(symptoms).issubset(person_symptoms):
+            return disease
+    return None
+
+# Query
+print("Diagnosis for john:", diagnose("john"))  # Output: covid
+print("Diagnosis for alice:", diagnose("alice"))  # Output: common_cold
